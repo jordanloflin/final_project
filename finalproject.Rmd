@@ -1,0 +1,89 @@
+---
+title: "final project presentation"
+author: "Jordan Loflin"
+date: "`r format(Sys.time(), '%B %d, %Y @ %I:%M %p')`"
+output: ioslides_presentation
+---
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = NA
+)
+```
+
+## Packages Used
+
+The only package I used was tidyverse for data manipulation and plotting. This was the only one necessary for my plots.
+
+```{r, echo = TRUE}
+library(tidyverse)
+```
+
+## Happiness Dataset
+
+The dataset I used was a compiled version of data from the World Happiness Report up to 2022. [World Happiness Report up to 2022](https://www.kaggle.com/datasets/mathurinache/world-happiness-report/224525?select=2019.csv).
+
+The last time this dataset was updated was 2022. The data was not completed and therefore needed to be cut out of the dataset.
+
+**Variables in the dataset:**
+
+-   `Happiness Rank`: Ranking of all the countries in order of happiness
+-   `Country`: Representing 149 countries
+-   `Region`: 16 represented regions (11 used on my graphs)
+-   `Happiness` : Happiness on a scale from 1-10
+
+## 
+
+-   `Economy`: Percentage of how much this affected happiness
+-   `Family` :
+-   `Life_Exp` :
+-   `Freedom`
+-   `Trust_Corruption`:
+-   `Generosity`:
+-   `Year`: From 2015-2021
+
+```{r}
+happydata <- read_csv("data/world-happiness-report-2015-2021.csv")
+```
+
+## 
+
+```{r}
+happydata %>% 
+  filter(Year == 2019) %>%
+ggplot(aes(x = Happiness)) +
+  geom_histogram(bins = 10, color = "plum4", fill = "plum1") + 
+  theme() +
+  labs( title = "Which regions of the world are the happiest?",
+        subtitle = "Data includes 11 different regions in 2019", 
+        caption = " The - region represents 10 different countries",
+    x = "Happiness") +
+  facet_wrap(.~Region, ncol = 4)
+```
+
+## 
+
+```{r}
+happydata %>% 
+  filter(Year == 2019) %>%
+ggplot(aes(x = Happiness, y = Freedom)) +
+  geom_point(color = "plum4") + 
+  facet_wrap(.~Region) +
+labs( title = "How are freedom and happiness related",
+  x = "Happiness") 
+```
+
+## 
+
+```{r}
+happydata %>% 
+  filter(Year == 2019) %>%
+ggplot(aes(x = Happiness, y = Generosity)) +
+  geom_point(color = "plum4") + 
+  facet_wrap(.~Region) +
+labs( title = "How are happiness and generosity related?",
+      x = "Happiness") 
+```
